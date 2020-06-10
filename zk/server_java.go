@@ -6,6 +6,7 @@ import (
 	"os"
 	"os/exec"
 	"path/filepath"
+	"strconv"
 )
 
 type ErrMissingServerConfigField string
@@ -124,7 +125,7 @@ func (srv *Server) Start() error {
 			return fmt.Errorf("zk: unable to find server jar")
 		}
 	}
-	srv.cmd = exec.Command("java", "-jar", srv.JarPath, "server", srv.ConfigPath)
+	srv.cmd = exec.Command("java", "-jar", srv.JarPath, "server", strconv.Quote(srv.ConfigPath))
 	srv.cmd.Stdout = srv.Stdout
 	srv.cmd.Stderr = srv.Stderr
 	return srv.cmd.Start()
